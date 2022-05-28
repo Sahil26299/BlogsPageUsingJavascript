@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body id="blog_body">
+    <div class="grid-container">
+        <div class="grid-item1">
+            <h2>Create Your Own Blog!</h2>
+            <h4>Travelling | Exploring | Food | Entertainement | Education | Fitness</h4>
+        </div>
+        <div class="grid-item2">
+            <h2>Details for blog page!</h2>
+            <form action="#" method="get">
+                <div id="inp-1">
+                    <p id="inp-1_p">Blog Title: </p>
+                    <textarea name="blogTitle" id="blogTitle" cols="46" rows="2" onkeyup="isBlogTitle()" placeholder="Enter Your Blog's Title"></textarea>
+                    <p id="errorTitle"></p>
+                </div>
+                <div id="inp-1">
+                    <p id="inp-1_p">Blog Description: </p>
+                    <textarea name="blogDesc" id="blogDesc" cols="46" rows="5" onkeyup="isBlogDesc()" placeholder="Enter Your Blog's Description"></textarea>
+                    <p id="errorDesc"></p>
+                </div>
+                <div id="inp-1">
+                    <p id="inp-1_p">Author's Name: </p>
+                    <textarea name="authorName" id="authorName" cols="46" rows="2" onkeyup="isAuthorsName()" placeholder="Author's Name"></textarea>
+                    <p id="errorAuthorName"></p>
+                </div>
+                <div id="inp-1">
+                    <p id="inp-1_p">Blog Date: </p>
+                    <input type="date" name="date" id="datePosted" onchange="isDate()">
+                    <p id="errorDate"></p>
+                </div>
+                <div id="inp-1">
+                    <p id="inp-1_p">Post an Image: </p>
+                    <input type="file" id="upload_btn" onchange="isUploaded()">
+                    <p id="errorUpload"></p>
+                </div>
+
+                <div id="inp-5_blogs">
+                    <button type="button" onclick="registerBlogs()" id="btn_blogs">Create Blog!</button>
+                    <i class='fas fa-circle-notch fa-spin' id="spinner_blogs"></i>
+                    <div id="snackbar"></div>
+                    <button type="button" onclick="viewBlogs()" id="btn_blogs">View Blogs!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="/logic.js"></script>
+
+</html>

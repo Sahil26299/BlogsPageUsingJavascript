@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section id="sect1">
+        <h1 id="sect1_h1">SIGN UP</h1>
+        <form method="get">
+            <div id="inp-1">
+                <input id="name" type="text" name="full_name" placeholder="Enter your name" onkeyup="displayErrorName()" autocomplete="off">
+                <p id="show_name_error"></p>
+            </div>
+            <div id="inp-2">
+                <input id="email" type="email" name="email_id" placeholder="Enter your email" onkeyup="isEmailValid()" autocomplete="off">
+                <p id="show_email_error"></p>
+            </div>
+            <div id="inp-3">
+                <input id="contact" type="number" name="contact" placeholder="Enter your contact details" onkeyup="phoneNumberError()" autocomplete="off">
+                <p id="show_contact_error"></p>
+            </div>
+            <div id="inp-4">
+                <input id="password" type="password" name="password" placeholder="Enter your password" onkeyup="displayPasswordError()" autocomplete="off">
+                <p id="show_password_error">
+                    <ul id="ul">
+                        <li id='list_item1' style="color: tomato;">Must be at least 8 characters long</li>
+                        <li id='list_item2' style="color: tomato;">Must be atleast one uppercase letter</li>
+                        <li id='list_item3' style="color: tomato;">Must be atleast one lowercase letter</li>
+                        <li id='list_item4' style="color: tomato;">Must be at least one digit</li>
+                        <li id='list_item5' style="color: tomato;">Must be at least one special case Character</li>
+                    </ul>
+                </p>
+            </div>
+            <div id="inp-5">
+                <button type="button" onclick="validateAll()" id="btn">Sign Up</button>
+                <i class='fas fa-circle-notch fa-spin' id="spinner"></i>
+                <div id="snackbar"></div>
+            </div>
+        </form>
+        <p id="signin_p">Already a user? <a href="/signin.html" id="signin">SIGN IN</a></p>
+    </section>
+</body>
+<script src="/logic.js"></script>
+</html>

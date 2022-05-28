@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section id="sect1">
+        <h1 id="sect1_h1">SIGN IN</h1>
+        <form>
+            <div id="inp-2_signin">
+                <input id="emaillogin" type="email" name="email_id" placeholder="Enter your email" onkeyup="isLoginEmailValid()" autocomplete="off">
+                <p id="show_email_error"></p>
+            </div>
+            <div id="inp-4_signin">
+                <input id="passwordlogin" type="password" name="password" placeholder="Enter your password" onkeyup="displayLoginPasswordError()" autocomplete="off">
+                <p id="show_password_error"></p>
+            </div>
+            <div id="inp-5_signin">
+                <button onclick="validateLogin()" type="button" id="btn">Sign In</button>
+                <i class='fas fa-circle-notch fa-spin' id="spinner_signin"></i>
+                <div id="snackbar"></div>
+            </div>
+        </form>
+        <p id="signin_p">New user? <a href="/index.html" id="signin">SIGN UP</a></p>
+    </section>
+</body>
+<script src="/logic.js"></script>
+
+</html>

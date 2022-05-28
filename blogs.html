@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body id="blog_body">
+    <header id="header_blogs">
+        <div id="menu_right">
+            <a href="/blogRegister.html">Home</a>
+            <a href="">About US</a>
+            <button type="button" onclick="logout()" id="logout_btn">Sign Out</button>
+        </div>
+    
+    </header>
+    <div class="grid-container" id="blogsViewGridContainer">
+        
+    </div>
+    
+
+</body>
+<script>
+    blogData = JSON.parse(localStorage.getItem("blogs"));
+    userIDs = JSON.parse(localStorage.getItem("UserID"));
+    var str = ``;
+    for (i = 0; i < blogData.length; i++) { 
+        var element = blogData[i];
+        if(element.UserID == userIDs[1]){
+            str += `<div class="grid-item" id="item-${i + 1}">
+            <img src="${element.Image}" height="50%" width="100%">
+            <p id="Blogdetails"><b>Blog's Title: </b>${element.Title}</p>
+            <p id="Blogdetails"><b>Blog's Description: </b>${element.Description.length>15?element.Description.substr(0,15):element.Description}</p>
+            <p id="Blogdetails"><b>Blog's Author: </b>${element.Author}</p>
+            <p id="Blogdetails"><b>Date: </b>${element.Date}</p>
+            </div>`; 
+        } 
+    }
+    document.getElementById('blogsViewGridContainer').innerHTML = str;
+</script>
+<script src="/logic.js"></script>
+</html>
