@@ -30,6 +30,7 @@ input::placeholder{
     margin-bottom: 1.5vw;
     position: relative;
 }
+
 #spinner{
     position: absolute;
     top: 12px;
@@ -58,7 +59,7 @@ input::placeholder{
 #spinner_blogs{
     position: absolute;
     top: 12px;
-    right:275px;
+    right:40px;
     font-size: 18px;
     color: white;
     display: none;
@@ -136,6 +137,11 @@ input::placeholder{
     font-size: 16px;
     text-align: left;
     color: tomato;
+}
+#labelSignUp{
+    color: white;
+    font-size: 1.2vw;
+    text-align: left !important;
 }
 #btn{
     width: 26.5vw;
@@ -231,7 +237,7 @@ ul{
     color: red;
 }
 #btn_blogs{
-    width: 12vw;
+    width: 26.5vw;
     height: 2.5vw;
     border-radius: 5px;
     outline: none;

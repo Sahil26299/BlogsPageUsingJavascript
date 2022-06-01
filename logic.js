@@ -9,8 +9,8 @@ var password = "";
 function displayErrorName() {
     username = document.getElementById('name').value;
     var num = /[0-9]/g;
-    var spl_char = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
-    if (username.length >= 3 && !username.match(num) && !username.match(spl_char)) {
+    var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
+    if (username.length > 0 && !username.match(num) && !username.match(spl_char)) {
         document.getElementById('show_name_error').innerHTML = '';
         document.getElementById('name').style.border = '1px solid green';
         return true;
@@ -25,8 +25,19 @@ function displayErrorName() {
 function isEmailValid() {
     email = document.getElementById('email').value;
     if (isValidationEmail(email)) {
+        for(i=0; i<userData.length; i++){
+            if(userData[i].Email != email){
+                document.getElementById('show_email_error').innerHTML = '';
+                document.getElementById('email').style.border = '1px solid green';
+            }
+            else{
+                document.getElementById('show_email_error').innerHTML = 'User already exists!';
+                document.getElementById('email').style.border = '1px solid tomato';
+                return false;
+            }
+        }
         document.getElementById('show_email_error').innerHTML = '';
-        document.getElementById('email').style.border = '1px solid green';
+        document.getElementById('email').style.border = '1px solid green'; 
         return true;
     }
     else {
@@ -94,9 +105,8 @@ function displayPasswordError() {
 
 }
 
-var x = Math.floor(Math.random()*(1000000-100000)+100000);
-console.log(x);
 
+var x = Math.floor(Math.random()*(1000000-100000)+100000);
 //---------------------Register Page Validations---------------------//
 function validateAll() {
     if (displayErrorName() && isEmailValid() && phoneNumberError() && displayPasswordError()) {
@@ -110,7 +120,7 @@ function validateAll() {
             document.getElementById("snackbar").className = "";
         }, 2300);
         setTimeout(() => {
-            window.location.href = "signin.html";
+            window.location.href = "/BlogsPageUsingJavascript/signin.html";
             return true;
         }, 3000);
     }
@@ -179,7 +189,7 @@ function validateLogin() {
             }, 2300);
             setTimeout(() => {
 
-                window.location.href = "blogRegister.html";
+                window.location.href = "./blogs.html";
             return true;
             }, 3000); 
         }
@@ -205,7 +215,7 @@ function validateLogin() {
 var title = "";
 var description = "";
 var aName = "";
-var date = null;
+var date = "";
 var img_link = null;
 
 function isBlogTitle() {
@@ -252,30 +262,39 @@ function isAuthorsName() {
 
 function isDate() {
     date = document.getElementById('datePosted').value;
-    if (date) {
+    var myDate = new Date(date);
+    var currentDate = new Date;
+    if (!date) {
+        document.getElementById('datePosted').style.border = '1px solid red';
+        document.getElementById('errorDate').innerHTML = 'Please enter a date!';
+        return false;
+    }
+    else if(myDate>currentDate){
+        document.getElementById('datePosted').style.border = '1px solid red';
+        document.getElementById('errorDate').innerHTML = 'Post Date cannot be a future date!';
+        return false;
+    }
+    else {
         document.getElementById('datePosted').style.border = '1px solid green';
         document.getElementById('errorDate').innerHTML = '';
         return true;
     }
-    else {
-        document.getElementById('datePosted').style.border = '1px solid red';
-        document.getElementById('errorDate').innerHTML = 'Enter the description of your blog!';
-        return false;
-    }
 }
 
+var img_upload = null;
 function isUploaded() {
-    var img_upload = document.getElementById('upload_btn');
+    img_upload = document.getElementById('upload_btn');
+    console.log(img_upload.files[0]==null);
     if(!img_upload.files || !img_upload.files[0])return false;
     var reader = new FileReader();
     reader.addEventListener("load", function(evt){
         img_link = evt.target.result;
-        console.log(img_link);
     })  
     reader.readAsDataURL(img_upload.files[0]);
-    if (img_link == null) {
+    if (img_upload.files[0] == null) {
+        console.log(img_upload.files[0]==null);
         document.getElementById('upload_btn').style.border = '1px solid red';
-        document.getElementById('errorUpload').innerHTML = 'Enter the description of your blog!';
+        document.getElementById('errorUpload').innerHTML = 'Please upload a file!';
         return false;
     }
     else {
@@ -306,6 +325,9 @@ function registerBlogs() {
                 document.getElementById('spinner_blogs').style.display = "none";
                 document.getElementById("snackbar").className = "";
             }, 2300);
+            setTimeout(() => {
+                window.location.href = 'blogs.html';
+            }, 3000);
         return true;
     }
     else {
@@ -318,13 +340,7 @@ function registerBlogs() {
 }
 //----x------x-------x----Blog Register Page validations-----x------x------x----//
 
-
-function viewBlogs() {
-    window.location.href = "blogs.html";
-    return true;
-}
-
  function logout(){
-     window.location.href = "signin.html";
+     window.location.href = "/BlogsPageUsingJavascript/signin.html";
  }
 
