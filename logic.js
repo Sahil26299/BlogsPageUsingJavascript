@@ -23,7 +23,7 @@ function displayErrorName() {
 }
 
 function isEmailValid() {
-    email = document.getElementById('email').value;
+    email = document.getElementById('email').value.toLowerCase();
     if (isValidationEmail(email)) {
         for(i=0; i<userData.length; i++){
             if(userData[i].Email != email){
@@ -104,9 +104,17 @@ function displayPasswordError() {
     }
 }
 
+function showPassword(){
+    var typeOfPassword = document.getElementById('password').type;
+    if(typeOfPassword=='password'){
+        document.getElementById('password').type = 'text';
+    }
+    else{document.getElementById('password').type = 'password';}
+}
+
 var confirmPassword='';
 function displayConfirmPasswordError(){
-    confirmPassword = document.getElementById('confirmPassword').value;
+    var confirmPassword = document.getElementById('confirmPassword').value;
     if(confirmPassword=='' || !confirmPassword){
         document.getElementById('confirmPassword').style.border = '1px solid tomato';
         document.getElementById('show_confirm_password_error').innerHTML = 'Please re-enter password!';
@@ -127,11 +135,19 @@ function displayConfirmPasswordError(){
     }
 }
 
+function showConfirmPassword(){
+    var typeOfConfirmPassword = document.getElementById('confirmPassword').type;
+    if(typeOfConfirmPassword=='password'){
+        document.getElementById('confirmPassword').type = 'text';
+    }
+    else{document.getElementById('confirmPassword').type = 'password';}
+}
+
 
 var x = Math.floor(Math.random()*(1000000-100000)+100000);
 //---------------------Register Page Validations---------------------//
 function validateAll() {
-    if (displayErrorName() && isEmailValid() && phoneNumberError() && displayPasswordError()) {
+    if (displayErrorName() && isEmailValid() && phoneNumberError() && displayPasswordError() && displayConfirmPasswordError()) {
         userData.push({ Name: username, Email: email, Number: number, Password: password, UniqueID: x});
         localStorage.setItem("users", JSON.stringify(userData));
         document.getElementById('spinner').style.display = "block";
@@ -155,6 +171,14 @@ function validateAll() {
     }
 }
 
+function showPasswordWhileLogin(){
+    var typeOfConfirmPassword = document.getElementById('confirmPassword').type;
+    if(typeOfConfirmPassword=='password'){
+        document.getElementById('confirmPassword').type = 'text';
+    }
+    else{document.getElementById('confirmPassword').type = 'password';}
+}
+
 //-----x-----x-----x------Register Page Validations-------x------x----x----//
 
 //---------------------Login Page---------------------//
@@ -175,7 +199,7 @@ function displayLoginPasswordError() {
 }
 
 function isLoginEmailValid() {
-    emailLogin = document.getElementById('emaillogin').value;
+    emailLogin = document.getElementById('emaillogin').value.toLowerCase();
     if (isValidationEmail(emailLogin)) {
         document.getElementById('show_email_error').innerHTML = '';
         document.getElementById('emaillogin').style.border = '1px solid white';
@@ -230,6 +254,14 @@ function validateLogin() {
         displayLoginPasswordError();
     }
 }
+
+function showPasswordWhileLogin(){
+    var typeOfLoginPassword = document.getElementById('passwordlogin').type;
+    if(typeOfLoginPassword=='password'){
+        document.getElementById('passwordlogin').type = 'text';
+    }
+    else{document.getElementById('passwordlogin').type = 'password';}
+}
 //---x-----x-------x------Login Page Validations----x-------x-------x---//
 //---x------x------x------Login Page------x------x-----x----//
 
@@ -237,7 +269,7 @@ function validateLogin() {
 var otpSent = null;
 var emailEnteredForPasswordReset = "";
 function isResetPasswordEmailValid(){
-    emailEnteredForPasswordReset = document.getElementById('emailReset').value;
+    emailEnteredForPasswordReset = document.getElementById('emailReset').value.toLowerCase();
     if (isValidationEmail(emailEnteredForPasswordReset)) {
         var flag = 0
         for(i=0; i<userData.length; i++){
@@ -264,9 +296,7 @@ function isResetPasswordEmailValid(){
 }
 
 function sendOTP(){
-    console.log('MyOtp');
     otpSent = Math.floor(Math.random()*(1000000-100000)+100000);
-    console.log(otpSent)
     if(isResetPasswordEmailValid()){
             document.getElementById("snackbar").innerHTML = "Otp Sent!"
             document.getElementById("snackbar").className = "show";
@@ -303,8 +333,9 @@ function isOTPValid(){
         return false;
     }
 }
+var newPassword = "";
 function displayResetPasswordError() {
-    password = document.getElementById('passwordReset').value;
+    newPassword = document.getElementById('passwordReset').value;
     document.getElementById('ul').style.display = 'block';
     document.getElementById('ul').style.color = 'tomato';
     document.getElementById('passwordReset').style.border = '1px solid tomato';
@@ -313,22 +344,22 @@ function displayResetPasswordError() {
     var digit = /[0-9]/g;
     var spl_char = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
     // let characters = upper.concat(lower, digit, spl_char);
-    if (password.match(upper)) {
+    if (newPassword.match(upper)) {
         document.getElementById('list_item2').style.color = 'green';
     } else { document.getElementById('list_item2').style.color = 'tomato'; }
-    if (password.match(lower)) {
+    if (newPassword.match(lower)) {
         document.getElementById('list_item3').style.color = 'green';
     } else { document.getElementById('list_item3').style.color = 'tomato'; }
-    if (password.match(digit)) {
+    if (newPassword.match(digit)) {
         document.getElementById('list_item4').style.color = 'green';
     } else { document.getElementById('list_item4').style.color = 'tomato'; }
-    if (password.match(spl_char)) {
+    if (newPassword.match(spl_char)) {
         document.getElementById('list_item5').style.color = 'green';
     } else { document.getElementById('list_item5').style.color = 'tomato'; }
-    if (password.length >= 8) {
+    if (newPassword.length >= 8) {
         document.getElementById('list_item1').style.color = 'green';
     } else { document.getElementById('list_item1').style.color = 'tomato'; }
-    if (password.match(upper) && password.match(lower) && password.match(digit) && password.match(spl_char) && password.length >= 8) {
+    if (newPassword.match(upper) && newPassword.match(lower) && newPassword.match(digit) && newPassword.match(spl_char) && newPassword.length >= 8) {
         document.getElementById('ul').style.display = 'none';
         document.getElementById('passwordReset').style.border = '1px solid green';
         return true;
@@ -338,15 +369,52 @@ function displayResetPasswordError() {
     }
 
 }
+var confirmNewPassword="";
+function displayConfirmResetPasswordError(){
+    confirmNewPassword = document.getElementById('confirmPasswordReset').value;
+    if(confirmNewPassword=='' || !confirmNewPassword){
+        document.getElementById('confirmPasswordReset').style.border = '1px solid tomato';
+        document.getElementById('show_reset_confirm_password_error').innerHTML = 'Please re-enter password!';
+        document.getElementById('show_reset_confirm_password_error').style.color = 'tomato';
+        return false;
+    }
+    if(confirmNewPassword == newPassword){
+        document.getElementById('confirmPasswordReset').style.border = '1px solid green';
+        document.getElementById('show_reset_confirm_password_error').innerHTML = 'Password Matches!';
+        document.getElementById('show_reset_confirm_password_error').style.color = 'green';
+        return true;
+    }
+    else{
+        document.getElementById('confirmPasswordReset').style.border = '1px solid tomato';
+        document.getElementById('show_reset_confirm_password_error').innerHTML = 'Password does not Match!';
+        document.getElementById('show_reset_confirm_password_error').style.color = 'tomato';
+        return false;        
+    }
+}
+function showResetPassword(){
+    var showResetPass = document.getElementById('passwordReset').type;
+    if(showResetPass=='password'){
+        document.getElementById('passwordReset').type = 'text';
+    }
+    else{document.getElementById('passwordReset').type = 'password';}
+}
+function showResetConfirmPassword(){
+    var showResetConfirmPass = document.getElementById('confirmPasswordReset').type;
+    if(showResetConfirmPass=='password'){
+        document.getElementById('confirmPasswordReset').type = 'text';
+    }
+    else{document.getElementById('confirmPasswordReset').type = 'password';}
+}
+
 function resetPassword(){
     var resetPasswordEntered = document.getElementById('passwordReset').value;
-    if(displayResetPasswordError()){
+    if(displayResetPasswordError() && displayConfirmResetPasswordError()){
         for(i=0; i<userData.length; i++){
             if(userData[i].Email==emailEnteredForPasswordReset){
                 userData[i].Password = resetPasswordEntered;
                 console.log(userData);
                 localStorage.setItem('users', JSON.stringify(userData));
-                document.getElementById("snackbar").innerHTML = "Password changed successfully!"
+                document.getElementById("snackbar").innerHTML = "Password changed successfully!";
                 document.getElementById("snackbar").className = "show";
                 setTimeout(() => {
                     document.getElementById("snackbar").className = "";
@@ -357,6 +425,9 @@ function resetPassword(){
                 }, 2500)
             }
         }
+    }
+    else{
+        return false;
     }
 }
 

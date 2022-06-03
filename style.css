@@ -176,7 +176,9 @@ ul{
 
   #blog_body{
       background-image: linear-gradient(to right ,rgb(66, 188, 219) 20%, rgb(43, 126, 194) 100%);
+      margin: 0px;
   }
+
   .grid-container{
     display: grid;
     padding: 5vw 5vw;
@@ -203,6 +205,9 @@ ul{
 .grid-item2{
     padding: 3vw 5vw;
     background-color: white;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 0px 20px rgb(34, 34, 34);
 }
 .grid-item2 h2{
     color:black;
@@ -259,13 +264,16 @@ ul{
     display: grid;
     grid-template-columns: auto auto auto;
     padding: 2vw;
+    justify-content: start;
 }
 
 #blogsViewGridContainer div{
     background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgb(50, 50, 50);
     padding: 2vw 2vw;
-    width: 20vw;
-    height: 20vw;
+    width: 25vw;
+    height: 25vw;
     margin: 20px;
 }
 
@@ -275,6 +283,9 @@ ul{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #header_blogs{
+    position: sticky;
+    top: 0px;
+    z-index: 2;
     background-color: black;
     padding: 10px 10px;
     margin: 0px;
@@ -312,7 +323,10 @@ ul{
 }
 #forgotPasswordLink{
     color: rgb(109, 109, 238);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     text-decoration: none;
+    color: rgb(172, 172, 172);
+    font-weight: bold;
     float: right;
     margin: 10px 10px;
 }
@@ -320,7 +334,7 @@ ul{
     margin-top: 2vw;
     display: none;
 }
-#show_OTP_error, #show_confirm_password_error{
+#show_OTP_error, #show_confirm_password_error, #show_reset_confirm_password_error{
     padding-left: 20px;
     font-size: 16px;
     text-align: left;

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyBlogSpace</title>
     <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="/blogs.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,10 +24,10 @@
                 <p id="show_email_error"></p>
             </div>
             <div id="inp-3">
-                <input id="contact" type="number" name="contact" placeholder="Enter your contact details" onkeyup="phoneNumberError()" autocomplete="off">
+                <input id="contact" type="number" name="contact" placeholder="Enter your contact number" onkeyup="phoneNumberError()" autocomplete="off">
                 <p id="show_contact_error"></p>
             </div>
-            <div id="inp-4">
+            <div id="inp-4" style="position: relative;">
                 <input id="password" type="password" name="password" placeholder="Enter your password" onkeyup="displayPasswordError()" autocomplete="off">
                 <p id="show_password_error">
                     <ul id="ul">
@@ -37,10 +38,12 @@
                         <li id='list_item5' style="color: tomato;">Must be at least one special case Character</li>
                     </ul>
                 </p>
+                <i class="fas fa-eye" style="color: white; position:absolute; top:18px; right:30px;" onclick="showPassword()"></i>
             </div>
-            <div id="inp-4">
+            <div id="inp-4" style="position: relative;">
                 <input id="confirmPassword" type="password" name="password" placeholder="Confirm your password" onkeyup="displayConfirmPasswordError()" autocomplete="off">
                 <p id="show_confirm_password_error"></p>
+                <i class="fas fa-eye" style="color: white; position:absolute; top:18px; right:30px;" onclick="showConfirmPassword()"></i>
             </div>
             <div id="inp-5">
                 <button type="button" onclick="validateAll()" id="btn">Sign Up</button>
