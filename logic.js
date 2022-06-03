@@ -102,7 +102,29 @@ function displayPasswordError() {
     else {
         return false;
     }
+}
 
+var confirmPassword='';
+function displayConfirmPasswordError(){
+    confirmPassword = document.getElementById('confirmPassword').value;
+    if(confirmPassword=='' || !confirmPassword){
+        document.getElementById('confirmPassword').style.border = '1px solid tomato';
+        document.getElementById('show_confirm_password_error').innerHTML = 'Please re-enter password!';
+        document.getElementById('show_confirm_password_error').style.color = 'tomato';
+        return false;
+    }
+    if(confirmPassword == password){
+        document.getElementById('confirmPassword').style.border = '1px solid green';
+        document.getElementById('show_confirm_password_error').innerHTML = 'Password Matches!';
+        document.getElementById('show_confirm_password_error').style.color = 'green';
+        return true;
+    }
+    else{
+        document.getElementById('confirmPassword').style.border = '1px solid tomato';
+        document.getElementById('show_confirm_password_error').innerHTML = 'Password does not Match!';
+        document.getElementById('show_confirm_password_error').style.color = 'tomato';
+        return false;        
+    }
 }
 
 
@@ -120,7 +142,7 @@ function validateAll() {
             document.getElementById("snackbar").className = "";
         }, 2300);
         setTimeout(() => {
-            window.location.href = "/BlogsPageUsingJavascript/signin.html";
+            window.location.href = "/signin.html";
             return true;
         }, 3000);
     }
@@ -128,6 +150,7 @@ function validateAll() {
         isEmailValid();
         phoneNumberError();
         displayPasswordError();
+        displayConfirmPasswordError();
         return false;
     }
 }
@@ -209,6 +232,133 @@ function validateLogin() {
 }
 //---x-----x-------x------Login Page Validations----x-------x-------x---//
 //---x------x------x------Login Page------x------x-----x----//
+
+//---------------------------Send OTP-----------------------------//
+var otpSent = null;
+var emailEnteredForPasswordReset = "";
+function isResetPasswordEmailValid(){
+    emailEnteredForPasswordReset = document.getElementById('emailReset').value;
+    if (isValidationEmail(emailEnteredForPasswordReset)) {
+        var flag = 0
+        for(i=0; i<userData.length; i++){
+            if(userData[i].Email == emailEnteredForPasswordReset){
+                flag++;
+            }
+        }
+        if(flag!=0){
+            document.getElementById('show_email_error').innerHTML = '';
+            document.getElementById('emailReset').style.border = '1px solid green';
+            return true;
+        }
+        else{
+            document.getElementById('show_email_error').innerHTML = 'User not found!';
+            document.getElementById('emailReset').style.border = '1px solid tomato';
+            return false;
+        }
+    }
+    else {
+        document.getElementById('show_email_error').innerHTML = 'Please enter the valid email!';
+        document.getElementById('emailReset').style.border = '1px solid tomato';
+        return false;
+    }
+}
+
+function sendOTP(){
+    console.log('MyOtp');
+    otpSent = Math.floor(Math.random()*(1000000-100000)+100000);
+    console.log(otpSent)
+    if(isResetPasswordEmailValid()){
+            document.getElementById("snackbar").innerHTML = "Otp Sent!"
+            document.getElementById("snackbar").className = "show";
+        setTimeout(() => {
+            document.getElementById("snackbar").className = "";
+            document.getElementById('btn').innerHTML = "Re-Send OTP";
+            return true;
+        }, 2300);
+        setTimeout(()=>{
+            alert(`Your OTP is ${otpSent}. Please don't share it with anyone.`);
+            document.getElementById('ifOTPSent').style.display = 'block';
+        }, 2500)
+
+    }
+    else{
+        return false;
+    }
+}
+
+function isOTPValid(){
+    var otpEntered = document.getElementById('enterOTPField').value;
+    if(otpEntered==otpSent){
+        document.getElementById('isOTPValid').style.display = 'block';
+        document.getElementById('show_OTP_error').innerHTML = 'OTP matches!';
+        document.getElementById('show_OTP_error').style.color = 'green';
+        document.getElementById('enterOTPField').style.border = '1px solid green';
+        return true;
+    }
+    else{
+        document.getElementById('isOTPValid').style.display = 'none';
+        document.getElementById('show_OTP_error').style.color = 'tomato';
+        document.getElementById('show_OTP_error').innerHTML = 'Otp does not match!';
+        document.getElementById('enterOTPField').style.border = '1px solid tomato';
+        return false;
+    }
+}
+function displayResetPasswordError() {
+    password = document.getElementById('passwordReset').value;
+    document.getElementById('ul').style.display = 'block';
+    document.getElementById('ul').style.color = 'tomato';
+    document.getElementById('passwordReset').style.border = '1px solid tomato';
+    var upper = /[A-Z]/g;
+    var lower = /[a-z]/g;
+    var digit = /[0-9]/g;
+    var spl_char = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
+    // let characters = upper.concat(lower, digit, spl_char);
+    if (password.match(upper)) {
+        document.getElementById('list_item2').style.color = 'green';
+    } else { document.getElementById('list_item2').style.color = 'tomato'; }
+    if (password.match(lower)) {
+        document.getElementById('list_item3').style.color = 'green';
+    } else { document.getElementById('list_item3').style.color = 'tomato'; }
+    if (password.match(digit)) {
+        document.getElementById('list_item4').style.color = 'green';
+    } else { document.getElementById('list_item4').style.color = 'tomato'; }
+    if (password.match(spl_char)) {
+        document.getElementById('list_item5').style.color = 'green';
+    } else { document.getElementById('list_item5').style.color = 'tomato'; }
+    if (password.length >= 8) {
+        document.getElementById('list_item1').style.color = 'green';
+    } else { document.getElementById('list_item1').style.color = 'tomato'; }
+    if (password.match(upper) && password.match(lower) && password.match(digit) && password.match(spl_char) && password.length >= 8) {
+        document.getElementById('ul').style.display = 'none';
+        document.getElementById('passwordReset').style.border = '1px solid green';
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+function resetPassword(){
+    var resetPasswordEntered = document.getElementById('passwordReset').value;
+    if(displayResetPasswordError()){
+        for(i=0; i<userData.length; i++){
+            if(userData[i].Email==emailEnteredForPasswordReset){
+                userData[i].Password = resetPasswordEntered;
+                console.log(userData);
+                localStorage.setItem('users', JSON.stringify(userData));
+                document.getElementById("snackbar").innerHTML = "Password changed successfully!"
+                document.getElementById("snackbar").className = "show";
+                setTimeout(() => {
+                    document.getElementById("snackbar").className = "";
+                }, 2300);
+                setTimeout(()=>{
+                    window.location.href = 'signin.html'
+                    return true;
+                }, 2500)
+            }
+        }
+    }
+}
 
 
 //---------------------Blog Register Page validations---------------------//
@@ -341,6 +491,6 @@ function registerBlogs() {
 //----x------x-------x----Blog Register Page validations-----x------x------x----//
 
  function logout(){
-     window.location.href = "/BlogsPageUsingJavascript/signin.html";
+     window.location.href = "/signin.html";
  }
 
