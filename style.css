@@ -2,7 +2,7 @@ body{
     background-color: black;
 }
 #sect1{
-    padding: 10vw 35vw;
+    padding: 5vw 35vw;
     text-align: center;
 }
 #sect1_h1{
@@ -23,10 +23,13 @@ input{
     color: white;
     font-size: 15px;
 }
+#birthDateInput{
+    color-scheme: dark;
+}
 input::placeholder{
     font-size: 15px;
 }
-#inp-1,#inp-2, #inp-3, #inp-4, #inp-5{
+#inp-0, #inp-1,#inp-2, #inp-3, #inp-4, #inp-5{
     margin-bottom: 1.5vw;
     position: relative;
 }
@@ -132,7 +135,7 @@ input::placeholder{
     to {bottom: 0; opacity: 0;}
   }
 
-#show_name_error, #show_email_error, #show_contact_error, #show_password_error{
+#show_fname_error, #show_lname_error, #show_dob_error, #show_email_error, #show_contact_error, #show_password_error{
     padding-left: 20px;
     font-size: 16px;
     text-align: left;

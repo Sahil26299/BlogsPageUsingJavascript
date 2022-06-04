@@ -1,32 +1,68 @@
 
 var userData = JSON.parse(localStorage.getItem("users")) !== null ? JSON.parse(localStorage.getItem("users")) : [];
 var username = "";
+var userlname = "";
 var email = "";
 var number = "";
 var password = "";
+var birthDate = "";
 
-
-function displayErrorName() {
-    username = document.getElementById('name').value;
-    var blank_space = /\s/g;
+function displayErrorfName() {
+    username = document.getElementById('fname').value;
+    var blank_space = /\s/;
     var begining_regexp = /\b[0-9]/;
     var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
     var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
-    if (username.length > 0 && !username.match(num) && !username.match(blank_space) && !username.match(spl_char) && !username.match(begining_regexp)) {
-        document.getElementById('show_name_error').innerHTML = '';
-        document.getElementById('name').style.border = '1px solid green';
+    if (username.length > 0 && username.length < 12 && !username.match(num) && !username.match(blank_space) && !username.match(spl_char) && !username.match(begining_regexp)) {
+        document.getElementById('show_fname_error').innerHTML = '';
+        document.getElementById('fname').style.border = '1px solid green';
         return true;
     }
     else {
-        document.getElementById('show_name_error').innerHTML = 'Enter valid name!';
-        document.getElementById('name').style.border = '1px solid tomato';
+        document.getElementById('show_fname_error').innerHTML = 'Enter valid first name!';
+        document.getElementById('fname').style.border = '1px solid tomato';
         return false;
+    }
+}
+
+function displayErrorlName() {
+    userlname = document.getElementById('lname').value;
+    var blank_space = /\s/;
+    var begining_regexp = /\b[0-9]/;
+    var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
+    var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
+    if (userlname.length > 0 && userlname.length > 0 && !userlname.match(num) && !userlname.match(blank_space) && !userlname.match(spl_char) && !userlname.match(begining_regexp)) {
+        document.getElementById('show_lname_error').innerHTML = '';
+        document.getElementById('lname').style.border = '1px solid green';
+        return true;
+    }
+    else {
+        document.getElementById('show_lname_error').innerHTML = 'Enter valid last name!';
+        document.getElementById('lname').style.border = '1px solid tomato';
+        return false;
+    }
+}
+
+function displayErrorBirthDate(){
+    birthDate = document.getElementById('birthDateInput').value;
+    var fullBirthDate = new Date(birthDate);
+    var currentDate = new Date();
+    if(currentDate.getFullYear() - fullBirthDate.getFullYear() > 100 || currentDate.getFullYear() - fullBirthDate.getFullYear() < 18 || currentDate<fullBirthDate || birthDate == ''){
+        document.getElementById('show_dob_error').innerHTML = 'Please enter valid birth date!';
+        document.getElementById('birthDateInput').style.border = '1px solid tomato';
+        return false;
+    }
+    else{
+        document.getElementById('show_dob_error').innerHTML = '';
+        document.getElementById('birthDateInput').style.border = '1px solid green';
+        return true;
     }
 }
 
 function isEmailValid() {
     email = document.getElementById('email').value.toLowerCase();
-    if (isValidationEmail(email)) {
+    var blank = /\s/;
+    if (isValidationEmail(email) && !email.match(blank)) {
         for(i=0; i<userData.length; i++){
             if(userData[i].Email != email){
                 document.getElementById('show_email_error').innerHTML = '';
@@ -50,30 +86,41 @@ function isEmailValid() {
 }
 function isValidationEmail(email) {
     //const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)([a-z]{2,4})(.[a-z]{2,3})?$/;
-    const beg_num = /\b[0-9]/;
+    // const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)([a-z]{2,4})(.[a-z]{2,3})?$/;  
+    const re = /^\w+([\.-]?\w+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.){1,2}[a-zA-Z]{2,3}))$/
+    const beg_spl = /^[0-9\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/; 
+    // const space = /\s/;
     //email name can contain number but should not start with number, number and - can come betn @ and . 
-    //numbers cannot appear after . symbol. After . one extension is compulsory and second extension likein or org is optional.
+    //numbers cannot appear after . symbol. After . one extension is compulsory and second extension like in or org is optional.
     // After that no . are allowed 
     if (email === "" || email === "undefined") {
         return false;
     }
-    return (re.test(String(email).toLowerCase()) && !beg_num.test(String(email).toLowerCase()));
+    // return (re.test(String(email).toLowerCase()) && !beg_num.test(String(email).toLowerCase()));
+    return (email.match(re) && !email.match(beg_spl));
+    //  && email.match(space));
 }
 
 function phoneNumberError() {
     number = document.getElementById('contact').value;
-    var reg = /\b[0]{2,}/;
-    if (number.toString().length !== 10 || number.match(reg)) {
-        document.getElementById('show_contact_error').innerHTML = 'Enter valid contact!';
-        document.getElementById('contact').style.border = '1px solid tomato';
-        return false;
-    }
-    else {
+    var reg = /[7-9][0-9]{9}/g;
+    // var beginning = /\b\-/;
+    //should not accept mobile number starting with 0-6 digits.
+    if (number.toString().length >= 10 && number.match(reg) && number.toString().length <= 13) {
         document.getElementById('show_contact_error').innerHTML = '';
         document.getElementById('contact').style.border = '1px solid green';
         return true;
-    } 0.
+    }
+    // else if(number.match(beginning)){
+    //     document.getElementById('show_contact_error').innerHTML = 'Enter valid contact!';
+    //     document.getElementById('contact').style.border = '1px solid tomato';
+    //     return false;
+    // }
+    else {
+        document.getElementById('show_contact_error').innerHTML = 'Enter valid contact!';
+        document.getElementById('contact').style.border = '1px solid tomato';
+        return false;
+    } 
 
 }
 
@@ -85,6 +132,7 @@ function displayPasswordError() {
     var upper = /[A-Z]/g;
     var lower = /[a-z]/g;
     var digit = /[0-9]/g;
+    var blank_space = /\s/g;
     var spl_char = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
     // let characters = upper.concat(lower, digit, spl_char);
     if (password.match(upper)) {
@@ -102,7 +150,15 @@ function displayPasswordError() {
     if (password.length >= 8) {
         document.getElementById('list_item1').style.color = 'green';
     } else { document.getElementById('list_item1').style.color = 'tomato'; }
-    if (password.match(upper) && password.match(lower) && password.match(digit) && password.match(spl_char) && password.length >= 8) {
+    if (password.length <= 16) {
+        document.getElementById('list_item7').style.color = 'green';
+    } else { document.getElementById('list_item7').style.color = 'tomato'; }
+    if(password.match(blank_space)){
+        document.getElementById('list_item6').style.color = 'tomato';
+    }else{
+        document.getElementById('list_item6').style.color = 'green';
+    }
+    if (password.match(upper) && password.match(lower) && password.match(digit) && password.match(spl_char) && password.length >= 8 && password.length <= 16 && !password.match(blank_space)) {
         document.getElementById('ul').style.display = 'none';
         document.getElementById('password').style.border = '1px solid green';
         return true;
@@ -153,10 +209,12 @@ function showConfirmPassword(){
 
 
 var x = Math.floor(Math.random()*(1000000-100000)+100000);
+
 //---------------------Register Page Validations---------------------//
+
 function validateAll() {
-    if (displayErrorName() && isEmailValid() && phoneNumberError() && displayPasswordError() && displayConfirmPasswordError()) {
-        userData.push({ Name: username, Email: email, Number: number, Password: password, UniqueID: x});
+    if (displayErrorfName() && displayErrorlName() && displayErrorBirthDate() && isEmailValid() && phoneNumberError() && displayPasswordError() && displayConfirmPasswordError()) {
+        userData.push({ Name: username+" "+userlname, DateOfBirth: birthDate, Email: email, Number: number, Password: password, UniqueID: x});
         localStorage.setItem("users", JSON.stringify(userData));
         document.getElementById('spinner').style.display = "block";
         document.getElementById("snackbar").innerHTML = "Registered Successfully!"
@@ -171,6 +229,8 @@ function validateAll() {
         }, 3000);
     }
     else {
+        displayErrorlName();
+        displayErrorBirthDate();
         isEmailValid();
         phoneNumberError();
         displayPasswordError();
@@ -207,8 +267,9 @@ function displayLoginPasswordError() {
 }
 
 function isLoginEmailValid() {
+    var blank = /\s/;
     emailLogin = document.getElementById('emaillogin').value.toLowerCase();
-    if (isValidationEmail(emailLogin)) {
+    if (isValidationEmail(emailLogin) && !emailLogin.match(blank)) {
         document.getElementById('show_email_error').innerHTML = '';
         document.getElementById('emaillogin').style.border = '1px solid white';
         return true;
@@ -350,6 +411,7 @@ function displayResetPasswordError() {
     var upper = /[A-Z]/g;
     var lower = /[a-z]/g;
     var digit = /[0-9]/g;
+    var blank_space = /\s/g;
     var spl_char = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
     // let characters = upper.concat(lower, digit, spl_char);
     if (newPassword.match(upper)) {
@@ -367,7 +429,13 @@ function displayResetPasswordError() {
     if (newPassword.length >= 8) {
         document.getElementById('list_item1').style.color = 'green';
     } else { document.getElementById('list_item1').style.color = 'tomato'; }
-    if (newPassword.match(upper) && newPassword.match(lower) && newPassword.match(digit) && newPassword.match(spl_char) && newPassword.length >= 8) {
+    if (newPassword.length <= 16) {
+        document.getElementById('list_item7').style.color = 'green';
+    } else { document.getElementById('list_item7').style.color = 'tomato'; }
+    if (newPassword.match(blank_space)) {
+        document.getElementById('list_item6').style.color = 'tomato';
+    } else { document.getElementById('list_item6').style.color = 'green'; }
+    if (newPassword.match(upper) && newPassword.match(lower) && newPassword.match(digit) && newPassword.match(spl_char) && newPassword.length >= 8 && newPassword.length <= 16 && !newPassword.match(blank_space)) {
         document.getElementById('ul').style.display = 'none';
         document.getElementById('passwordReset').style.border = '1px solid green';
         return true;

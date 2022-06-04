@@ -15,12 +15,20 @@
     <section id="sect1">
         <h1 id="sect1_h1">SIGN UP</h1>
         <form method="get">
+            <div id="inp-0">
+                <input id="fname" type="text" name="first_name" placeholder="Enter first name" onkeyup="displayErrorfName()" autocomplete="off">
+                <p id="show_fname_error"></p>
+            </div>
+            <div id="inp-0">
+                <input id="lname" type="text" name="last_name" placeholder="Enter last name" onkeyup="displayErrorlName()" autocomplete="off">
+                <p id="show_lname_error"></p>
+            </div>
             <div id="inp-1">
-                <input id="name" type="text" name="full_name" placeholder="Enter your name" onkeyup="displayErrorName()" autocomplete="off">
-                <p id="show_name_error"></p>
+                <input id="birthDateInput" type="date" name="dateOfBirth" placeholder="Enter your birth date" onchange="displayErrorBirthDate()" autocomplete="off">
+                <p id="show_dob_error"></p>
             </div>
             <div id="inp-2">
-                <input id="email" type="email" name="email_id" placeholder="Enter your email" onkeyup="isEmailValid()" autocomplete="off">
+                <input id="email" type="text" name="email_id" placeholder="Enter your email" onkeyup="isEmailValid()" autocomplete="off">
                 <p id="show_email_error"></p>
             </div>
             <div id="inp-3">
@@ -31,11 +39,13 @@
                 <input id="password" type="password" name="password" placeholder="Enter your password" onkeyup="displayPasswordError()" autocomplete="off">
                 <p id="show_password_error">
                     <ul id="ul">
-                        <li id='list_item1' style="color: tomato;">Must be at least 8 characters long</li>
-                        <li id='list_item2' style="color: tomato;">Must be atleast one uppercase letter</li>
-                        <li id='list_item3' style="color: tomato;">Must be atleast one lowercase letter</li>
-                        <li id='list_item4' style="color: tomato;">Must be at least one digit</li>
-                        <li id='list_item5' style="color: tomato;">Must be at least one special case Character</li>
+                        <li id='list_item1' style="color: tomato;">Password must be at least 8 characters long</li>
+                        <li id='list_item7' style="color: tomato;">Password must be at most 16 characters long</li>
+                        <li id='list_item2' style="color: tomato;">Password must be atleast one uppercase letter</li>
+                        <li id='list_item3' style="color: tomato;">Password must be atleast one lowercase letter</li>
+                        <li id='list_item4' style="color: tomato;">Password must be at least one digit</li>
+                        <li id='list_item5' style="color: tomato;">Password must be at least one special case Character</li>
+                        <li id='list_item6' style="color: tomato;">Password must not contain any blank space</li>
                     </ul>
                 </p>
                 <i class="fas fa-eye" style="color: white; position:absolute; top:18px; right:30px;" onclick="showPassword()"></i>
