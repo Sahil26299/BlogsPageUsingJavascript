@@ -8,9 +8,11 @@ var password = "";
 
 function displayErrorName() {
     username = document.getElementById('name').value;
-    var num = /[0-9]/g;
-    var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\.\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\_\-]/g;
-    if (username.length > 0 && !username.match(num) && !username.match(spl_char)) {
+    var blank_space = /\s/g;
+    var begining_regexp = /\b[0-9]/;
+    var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
+    var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
+    if (username.length > 0 && !username.match(num) && !username.match(blank_space) && !username.match(spl_char) && !username.match(begining_regexp)) {
         document.getElementById('show_name_error').innerHTML = '';
         document.getElementById('name').style.border = '1px solid green';
         return true;
@@ -47,16 +49,22 @@ function isEmailValid() {
     }
 }
 function isValidationEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    //const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)([a-z]{2,4})(.[a-z]{2,3})?$/;
+    const beg_num = /\b[0-9]/;
+    //email name can contain number but should not start with number, number and - can come betn @ and . 
+    //numbers cannot appear after . symbol. After . one extension is compulsory and second extension likein or org is optional.
+    // After that no . are allowed 
     if (email === "" || email === "undefined") {
         return false;
     }
-    return re.test(String(email).toLowerCase());
+    return (re.test(String(email).toLowerCase()) && !beg_num.test(String(email).toLowerCase()));
 }
 
 function phoneNumberError() {
     number = document.getElementById('contact').value;
-    if (number.toString().length !== 10) {
+    var reg = /\b[0]{2,}/;
+    if (number.toString().length !== 10 || number.match(reg)) {
         document.getElementById('show_contact_error').innerHTML = 'Enter valid contact!';
         document.getElementById('contact').style.border = '1px solid tomato';
         return false;
