@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyBlogSpace: Create new blogs</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="shortcut icon" href="/blogs.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./blogs.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,8 +15,10 @@
     <header id="header_blogs">
         <div id="menu_right">
             <h2>MyBlogSpace</h2>
-            <a href="./blogs.html">Your Blogs!</a>
-            <button type="button" onclick="logout()" id="logout_btn">Sign Out</button>
+            <button type="button" style="opacity: 0;" onclick="logoutFromRegister()" id="logout_btn" disabled>Sign Out</button>
+            <i class="fas fa-user" id="userIcon" style="color: black; display: inline-block;font-size: 0.9vw; margin-right: 5px;"></i>
+            <a id="usersName"></a>
+            <a href="./blogs.html" id="yourBlogsLink">My Blogs!</a>
         </div>
     
     </header>
@@ -24,23 +26,24 @@
         <div class="grid-item1">
             <h2>Create Your Own Blog!</h2>
             <h4>Travelling | Exploring | Food | Entertainement | Education | Fitness</h4>
+            <img src="/Javascript_Test_Blog_page.png" alt="" style="width: 34vw; margin-top: 2vw; border-radius: 5px;">
         </div>
         <div class="grid-item2">
             <h2>Details for blog page!</h2>
             <form action="#" method="get">
                 <div id="inp-1">
                     <p id="inp-1_p">Blog Title: </p>
-                    <textarea name="blogTitle" id="blogTitle" cols="46" rows="2" onkeyup="isBlogTitle()" placeholder="Enter Your Blog's Title"></textarea>
+                    <textarea name="blogTitle" id="blogTitle" cols="56" rows="2" onkeyup="isBlogTitle()" placeholder="Enter Your Blog's Title"></textarea>
                     <p id="errorTitle"></p>
                 </div>
                 <div id="inp-1">
                     <p id="inp-1_p">Blog Description: </p>
-                    <textarea name="blogDesc" id="blogDesc" cols="46" rows="5" onkeyup="isBlogDesc()" placeholder="Enter Your Blog's Description"></textarea>
+                    <textarea name="blogDesc" id="blogDesc" cols="56" rows="5" onkeyup="isBlogDesc()" placeholder="Enter Your Blog's Description"></textarea>
                     <p id="errorDesc"></p>
                 </div>
                 <div id="inp-1">
                     <p id="inp-1_p">Author's Name: </p>
-                    <textarea name="authorName" id="authorName" cols="46" rows="2" onkeyup="isAuthorsName()" placeholder="Author's Name"></textarea>
+                    <textarea name="authorName" id="authorName" cols="56" rows="2" onkeyup="isAuthorsName()" placeholder="Author's Name"></textarea>
                     <p id="errorAuthorName"></p>
                 </div>
                 <div id="inp-1">
@@ -64,6 +67,10 @@
     </div>
 </body>
 <script src="./logic.js"></script>
+<script>
+    userIDs = JSON.parse(localStorage.getItem("UserID"));
+    document.getElementById('usersName').innerHTML = `${userIDs==null?'Guest':userIDs[2]}`;
+</script>
 
 
 </html>

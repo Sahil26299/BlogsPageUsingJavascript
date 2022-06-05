@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <title>MyBlogSpace: signin</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="shortcut icon" href="/blogs.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./blogs.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -22,18 +23,18 @@
             <div id="inp-4_signin" style="position: relative;">
                 <input id="passwordlogin" type="password" name="password" placeholder="Enter your password" onkeyup="displayLoginPasswordError()" autocomplete="off">
                 <p id="show_password_error"></p>
-                <i class="fas fa-eye" style="color: white; position:absolute; top:18px; right:35px;" onclick="showPasswordWhileLogin()"></i>
+                <i class="fas fa-eye" style="color: white; position:absolute; top:1vw; right:2vw;" onclick="showPasswordWhileLogin()"></i>
             </div>
             <div id="inp-5_signin">
                 <button onclick="validateLogin()" type="button" id="btn">Sign In</button>
                 <i class='fas fa-circle-notch fa-spin' id="spinner_signin"></i>
                 <div id="snackbar"></div>
-                <p><a href="/forgotPassword.html" id="forgotPasswordLink">Forgot Password?</a></p>
+                <p><a href="./forgotPassword.html" id="forgotPasswordLink">Forgot Password?</a></p>
             </div>
         </form>
-        <p id="signin_p">New user? <a href="/index.html" id="signin">SIGN UP</a></p>
+        <p id="signin_p">New user? <a href="./index.html" id="signin">SIGN UP</a></p>
     </section>
 </body>
-<script src="logic.js"></script>
+<script src="./logic.js"></script>
 
 </html>

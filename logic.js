@@ -31,7 +31,7 @@ function displayErrorlName() {
     var begining_regexp = /\b[0-9]/;
     var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
     var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
-    if (userlname.length > 0 && userlname.length > 0 && !userlname.match(num) && !userlname.match(blank_space) && !userlname.match(spl_char) && !userlname.match(begining_regexp)) {
+    if (userlname.length > 0 && userlname.length < 15 && !userlname.match(num) && !userlname.match(blank_space) && !userlname.match(spl_char) && !userlname.match(begining_regexp)) {
         document.getElementById('show_lname_error').innerHTML = '';
         document.getElementById('lname').style.border = '1px solid green';
         return true;
@@ -48,7 +48,7 @@ function displayErrorBirthDate(){
     var fullBirthDate = new Date(birthDate);
     var currentDate = new Date();
     if(currentDate.getFullYear() - fullBirthDate.getFullYear() > 100 || currentDate.getFullYear() - fullBirthDate.getFullYear() < 18 || currentDate<fullBirthDate || birthDate == ''){
-        document.getElementById('show_dob_error').innerHTML = 'Please enter valid birth date!';
+        document.getElementById('show_dob_error').innerHTML = 'Please enter valid birth date!(Age: 18 years or above)';
         document.getElementById('birthDateInput').style.border = '1px solid tomato';
         return false;
     }
@@ -106,7 +106,7 @@ function phoneNumberError() {
     var reg = /[7-9][0-9]{9}/g;
     // var beginning = /\b\-/;
     //should not accept mobile number starting with 0-6 digits.
-    if (number.toString().length >= 10 && number.match(reg) && number.toString().length <= 13) {
+    if (number.toString().length == 10 && number.match(reg)) {
         document.getElementById('show_contact_error').innerHTML = '';
         document.getElementById('contact').style.border = '1px solid green';
         return true;
@@ -129,6 +129,7 @@ function displayPasswordError() {
     document.getElementById('ul').style.display = 'block';
     document.getElementById('ul').style.color = 'tomato';
     document.getElementById('password').style.border = '1px solid tomato';
+    displayConfirmPasswordError();
     var upper = /[A-Z]/g;
     var lower = /[a-z]/g;
     var digit = /[0-9]/g;
@@ -224,7 +225,7 @@ function validateAll() {
             document.getElementById("snackbar").className = "";
         }, 2300);
         setTimeout(() => {
-            window.location.href = "/signin.html";
+            window.location.href = "signin.html";
             return true;
         }, 3000);
     }
@@ -290,6 +291,7 @@ function validateLogin() {
             if(userData[i].Email == emailLogin && userData[i].Password == passwordLogin){
                 userIDs[0] = userData[i].Email;
                 userIDs[1] = userData[i].UniqueID;
+                userIDs[2] = userData[i].Name;
                 localStorage.setItem("UserID", JSON.stringify(userIDs));
                 right_cred++;
             }
@@ -385,29 +387,52 @@ function sendOTP(){
     }
 }
 
+var otpEntered = null;
 function isOTPValid(){
-    var otpEntered = document.getElementById('enterOTPField').value;
-    if(otpEntered==otpSent){
-        document.getElementById('isOTPValid').style.display = 'block';
-        document.getElementById('show_OTP_error').innerHTML = 'OTP matches!';
-        document.getElementById('show_OTP_error').style.color = 'green';
-        document.getElementById('enterOTPField').style.border = '1px solid green';
-        return true;
+    otpEntered = document.getElementById('enterOTPField').value;
+    if(otpEntered.length!=6){
+        document.getElementById('show_OTP_error').innerHTML = 'Please enter 6 digit otp!';
+        document.getElementById('show_OTP_error').style.color = 'tomato';
+        document.getElementById('enterOTPField').style.border = '1px solid tomato';   
     }
     else{
-        document.getElementById('isOTPValid').style.display = 'none';
-        document.getElementById('show_OTP_error').style.color = 'tomato';
-        document.getElementById('show_OTP_error').innerHTML = 'Otp does not match!';
-        document.getElementById('enterOTPField').style.border = '1px solid tomato';
+        document.getElementById('show_OTP_error').style.color = 'green';
+        document.getElementById('enterOTPField').style.border = '1px solid green';
+        document.getElementById('show_OTP_error').innerHTML = '';
+    }
+}
+var emailPassRes = [];
+function submitOTP(){
+    if(otpEntered==otpSent){
+        emailPassRes = emailEnteredForPasswordReset;
+        localStorage.setItem('emailForPasswordReset', JSON.stringify(emailPassRes));
+        document.getElementById("snackbar").innerHTML = "Success!"
+        document.getElementById("snackbar").className = "show";
+        setTimeout(() => {
+            document.getElementById("snackbar").className = "";
+        }, 2300); 
+        setTimeout(() => {
+            window.location.href = 'resertpassword.html';
+            return true;
+        }, 2500);
+    }
+    else{
+        document.getElementById("snackbar").innerHTML = "Invalid OTP!!"
+        document.getElementById("snackbar").className = "fail";
+        setTimeout(() => {
+            document.getElementById("snackbar").className = "";
+        }, 2300); 
         return false;
     }
 }
+
 var newPassword = "";
 function displayResetPasswordError() {
     newPassword = document.getElementById('passwordReset').value;
     document.getElementById('ul').style.display = 'block';
     document.getElementById('ul').style.color = 'tomato';
     document.getElementById('passwordReset').style.border = '1px solid tomato';
+    displayConfirmResetPasswordError()
     var upper = /[A-Z]/g;
     var lower = /[a-z]/g;
     var digit = /[0-9]/g;
@@ -483,12 +508,12 @@ function showResetConfirmPassword(){
 }
 
 function resetPassword(){
+    emailEnteredForPasswordReset = JSON.parse(localStorage.getItem('emailForPasswordReset'));
     var resetPasswordEntered = document.getElementById('passwordReset').value;
     if(displayResetPasswordError() && displayConfirmResetPasswordError()){
         for(i=0; i<userData.length; i++){
             if(userData[i].Email==emailEnteredForPasswordReset){
                 userData[i].Password = resetPasswordEntered;
-                console.log(userData);
                 localStorage.setItem('users', JSON.stringify(userData));
                 document.getElementById("snackbar").innerHTML = "Password changed successfully!";
                 document.getElementById("snackbar").className = "show";
@@ -581,7 +606,6 @@ function isDate() {
 var img_upload = null;
 function isUploaded() {
     img_upload = document.getElementById('upload_btn');
-    console.log(img_upload.files[0]==null);
     if(!img_upload.files || !img_upload.files[0])return false;
     var reader = new FileReader();
     reader.addEventListener("load", function(evt){
@@ -607,6 +631,17 @@ function isUploaded() {
 
 var blogData = JSON.parse(localStorage.getItem("blogs")) !== null ? JSON.parse(localStorage.getItem("blogs")) : [];
 function registerBlogs() {
+    if(userIDs==null){
+        document.getElementById("snackbar").innerHTML = "Login to create your own blogs!"
+        document.getElementById("snackbar").className = "fail";
+        setTimeout(() => {
+            document.getElementById("snackbar").className = "";
+        }, 2300);
+        setTimeout(() => {
+            logout();
+        }, 2500);
+        return false;
+    }
     var userId = userIDs[1];         // stores unique id of respective user
     title = document.getElementById('blogTitle').value;
     description = document.getElementById('blogDesc').value;
@@ -616,15 +651,15 @@ function registerBlogs() {
         blogData.push({ Title: title, Description: description, Author: aName, Date:date, Image:img_link, UserID:userId});
         localStorage.setItem("blogs", JSON.stringify(blogData));
         document.getElementById('spinner_blogs').style.display = "block";
-            document.getElementById("snackbar").innerHTML = "Creating your blog!"
-            document.getElementById("snackbar").className = "show";
-            setTimeout(() => {
-                document.getElementById('spinner_blogs').style.display = "none";
-                document.getElementById("snackbar").className = "";
-            }, 2300);
-            setTimeout(() => {
-                window.location.href = 'blogs.html';
-            }, 3000);
+        document.getElementById("snackbar").innerHTML = "Creating your blog!"
+        document.getElementById("snackbar").className = "show";
+        setTimeout(() => {
+            document.getElementById('spinner_blogs').style.display = "none";
+            document.getElementById("snackbar").className = "";
+        }, 2300);
+        setTimeout(() => {
+            window.location.href = 'blogs.html';
+        }, 3000);
         return true;
     }
     else {
@@ -638,6 +673,22 @@ function registerBlogs() {
 //----x------x-------x----Blog Register Page validations-----x------x------x----//
 
  function logout(){
+     localStorage.removeItem('UserID');
      window.location.href = "/signin.html";
  }
-
+ function logInForCreateBlog(){
+     var item = JSON.parse(localStorage.getItem('UserID'));
+     if(item == null){
+        document.getElementById("snackbar").innerHTML = "Login to create your own blogs!"
+        document.getElementById("snackbar").className = "fail";
+        setTimeout(() => {
+            document.getElementById("snackbar").className = "";
+        }, 2300);
+        setTimeout(() => {
+            logout();
+        }, 2500);
+     }
+     else{
+         window.location.href = 'blogRegister.html';
+     }
+ }

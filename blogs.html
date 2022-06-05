@@ -4,28 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>MyBlogSpace: Your Blogs</title>
-    <link rel="shortcut icon" href="/blogs.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./blogs.png" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body id="blog_body">
     <header id="header_blogs">
         <div id="menu_right">
             <h2>MyBlogSpace</h2>
-            <a href="./blogRegister.html">Create Blog!</a>
+            <i class="fas fa-user" id="userIcon" style="color: black; display: inline-block; font-size: 0.9vw; margin-right: 5px;"></i>
+            <a id="usersName"></a>
+            <a href="#" id="createBlogLink" onclick="logInForCreateBlog()">Create Blog!</a>
             <button type="button" onclick="logout()" id="logout_btn">Sign Out</button>
         </div>
-    
     </header>
-    <div class="grid-container" id="blogsViewGridContainer">
-        
-    </div>
-    
-
+    <section style="padding:2vw 1vw;">
+        <div class="grid-container" id="blogsViewGridContainer">
+            
+        </div>
+    </section>
+    <div id="snackbar"></div>
 </body>
 <script>
-    blogData = JSON.parse(localStorage.getItem("blogs"));
-    userIDs = JSON.parse(localStorage.getItem("UserID"));
+    blogData = JSON.parse(localStorage.getItem("blogs"))!=null?JSON.parse(localStorage.getItem("blogs")):[];
+    userIDs = JSON.parse(localStorage.getItem("UserID"))!=null?JSON.parse(localStorage.getItem("UserID")):'Guest';
+    document.getElementById('usersName').innerHTML = `${userIDs=='Guest'?userIDs:userIDs[2]}`;
     var str = ``;
     for (i = 0; i < blogData.length; i++) { 
         var element = blogData[i];
@@ -33,7 +40,7 @@
             str += `<div class="grid-item" id="item-${i + 1}">
             <img src="${element.Image}" height="50%" width="100%">
             <p id="Blogdetails"><b>Blog's Title: </b>${element.Title}</p>
-            <p id="Blogdetails"><b>Blog's Description: </b>${element.Description.length>15?element.Description.substr(0,15):element.Description}</p>
+            <p id="Blogdetails"><b>Blog's Description: </b>${element.Description.length>30?element.Description.substr(0,30):element.Description}</p>
             <p id="Blogdetails"><b>Blog's Author: </b>${element.Author}</p>
             <p id="Blogdetails"><b>Date: </b>${element.Date}</p>
             </div>`; 
