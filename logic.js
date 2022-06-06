@@ -541,10 +541,16 @@ var date = "";
 var img_link = null;
 
 function isBlogTitle() {
+    var spl_char = /^[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;
     title = document.getElementById('blogTitle').value;
     if (!title) {
         document.getElementById('blogTitle').style.border = '1px solid red';
         document.getElementById('errorTitle').innerHTML = 'Please enter the title of your blog!';
+        return false;
+    }
+    else if(title.match(spl_char)){
+        document.getElementById('blogTitle').style.border = '1px solid red';
+        document.getElementById('errorTitle').innerHTML = 'Please enter the valid title!';
         return false;
     }
     else {
@@ -555,30 +561,44 @@ function isBlogTitle() {
 }
 
 function isBlogDesc() {
+    var spl_char = /^[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;
     description = document.getElementById('blogDesc').value;
-    if (description) {
-        document.getElementById('blogDesc').style.border = '1px solid green';
-        document.getElementById('errorDesc').innerHTML = '';
-        return true;
-    }
-    else {
+    if (!description) {
         document.getElementById('blogDesc').style.border = '1px solid red';
         document.getElementById('errorDesc').innerHTML = 'Enter the description of your blog!';
         return false;
+    }
+    else if(description.match(spl_char)){
+        document.getElementById('blogDesc').style.border = '1px solid red';
+        document.getElementById('errorDesc').innerHTML = 'Enter the valid description';
+        return false;
+    }
+    else {
+        document.getElementById('blogDesc').style.border = '1px solid green';
+        document.getElementById('errorDesc').innerHTML = '';
+        return true;
     }
 }
 
 function isAuthorsName() {
     aName = document.getElementById('authorName').value;
-    if (aName) {
+    var spl_char = /^[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;
+    var beg = /\b[0-9]/;
+    var space = /\s{3}/;
+    if (!aName) {
+        document.getElementById('authorName').style.border = '1px solid red';
+        document.getElementById('errorAuthorName').innerHTML = "Enter the Author's Name!";
+        return false;
+    }
+    else if(aName.match(spl_char) || aName.match(beg) || aName.match(space)){
+        document.getElementById('authorName').style.border = '1px solid red';
+        document.getElementById('errorAuthorName').innerHTML = "Enter the valid Author's Name!";
+        return false;
+    }
+    else {
         document.getElementById('authorName').style.border = '1px solid green';
         document.getElementById('errorAuthorName').innerHTML = '';
         return true;
-    }
-    else {
-        document.getElementById('authorName').style.border = '1px solid red';
-        document.getElementById('errorAuthorName').innerHTML = 'Enter the description of your blog!';
-        return false;
     }
 }
 
