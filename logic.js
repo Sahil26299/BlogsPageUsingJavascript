@@ -10,16 +10,16 @@ var birthDate = "";
 function displayErrorfName() {
     username = document.getElementById('fname').value;
     var blank_space = /\s/;
-    var begining_regexp = /\b[0-9]/;
+    var cap_letter = /\b[A-Z]/;
     var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
     var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
-    if (username.length > 0 && username.length < 12 && !username.match(num) && !username.match(blank_space) && !username.match(spl_char) && !username.match(begining_regexp)) {
+    if (username.length > 0 && username.length < 12 && username.match(cap_letter) && !username.match(num) && !username.match(blank_space) && !username.match(spl_char)) {
         document.getElementById('show_fname_error').innerHTML = '';
         document.getElementById('fname').style.border = '1px solid green';
         return true;
     }
     else {
-        document.getElementById('show_fname_error').innerHTML = 'Enter valid first name!';
+        document.getElementById('show_fname_error').innerHTML = 'Enter valid first name(First letter must be capital)!';
         document.getElementById('fname').style.border = '1px solid tomato';
         return false;
     }
@@ -28,16 +28,16 @@ function displayErrorfName() {
 function displayErrorlName() {
     userlname = document.getElementById('lname').value;
     var blank_space = /\s/;
-    var begining_regexp = /\b[0-9]/;
-    var num = /[0-9]{4,}/;                          // numbers included(atmost 3 digits) but not at first place.
+    var cap_letter = /\b[A-Z]/;
+    var begining_regexp = /[0-9]/g;                       // numbers included(atmost 3 digits) but not at first place.
     var spl_char = /[\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/g;    
-    if (userlname.length > 0 && userlname.length < 15 && !userlname.match(num) && !userlname.match(blank_space) && !userlname.match(spl_char) && !userlname.match(begining_regexp)) {
+    if (userlname.length > 0 && userlname.length < 15 && userlname.match(cap_letter) && !userlname.match(blank_space) && !userlname.match(spl_char) && !userlname.match(begining_regexp)) {
         document.getElementById('show_lname_error').innerHTML = '';
         document.getElementById('lname').style.border = '1px solid green';
         return true;
     }
     else {
-        document.getElementById('show_lname_error').innerHTML = 'Enter valid last name!';
+        document.getElementById('show_lname_error').innerHTML = 'Enter valid last name(First letter must be capital)!';
         document.getElementById('lname').style.border = '1px solid tomato';
         return false;
     }
@@ -48,12 +48,15 @@ function displayErrorBirthDate(){
     var fullBirthDate = new Date(birthDate);
     var currentDate = new Date();
     if(currentDate.getFullYear() - fullBirthDate.getFullYear() > 100 || currentDate.getFullYear() - fullBirthDate.getFullYear() < 18 || currentDate<fullBirthDate || birthDate == ''){
-        document.getElementById('show_dob_error').innerHTML = 'Please enter valid birth date!(Age: 18 years or above)';
+        document.getElementById('show_dob_error').innerHTML = 'Please enter valid birth date!';
+        document.getElementById('dateErrorUL').style.display = 'block';
+        document.getElementById('dateErrorUL').style.display = 'block'
         document.getElementById('birthDateInput').style.border = '1px solid tomato';
         return false;
     }
     else{
         document.getElementById('show_dob_error').innerHTML = '';
+        document.getElementById('dateErrorUL').style.display = 'none'
         document.getElementById('birthDateInput').style.border = '1px solid green';
         return true;
     }
@@ -87,7 +90,7 @@ function isEmailValid() {
 function isValidationEmail(email) {
     //const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     // const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)([a-z]{2,4})(.[a-z]{2,3})?$/;  
-    const re = /^\w+([\.-]?\w+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.){1,2}[a-zA-Z]{2,3}))$/
+    const re = /^\w+([\.-]?\w+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.){1,2}[a-zA-Z]{2,3}))$/;
     const beg_spl = /^[0-9\!\@\#\$\%\£\^\&\*\)\(\+\=\<\>\{\}\,\/\\\?\[\]\:\;\'\"\|\~\`\-\_\.]/; 
     // const space = /\s/;
     //email name can contain number but should not start with number, number and - can come betn @ and . 
@@ -117,7 +120,7 @@ function phoneNumberError() {
     //     return false;
     // }
     else {
-        document.getElementById('show_contact_error').innerHTML = 'Enter valid contact!';
+        document.getElementById('show_contact_error').innerHTML = 'Enter valid mobile number!';
         document.getElementById('contact').style.border = '1px solid tomato';
         return false;
     } 
@@ -208,13 +211,25 @@ function showConfirmPassword(){
     else{document.getElementById('confirmPassword').type = 'password';}
 }
 
+function checkBoxValid(){
+    var is_checked = document.getElementById('exampleCheck1').checked;
+    if(is_checked){
+        document.getElementById("exampleCheck1").style.outline = "none";
+        return true;
+    }
+    else{
+        document.getElementById("exampleCheck1").style.outline = "2px solid tomato";
+        return false;
+    }
+}
+
 
 var x = Math.floor(Math.random()*(1000000-100000)+100000);
 
 //---------------------Register Page Validations---------------------//
 
 function validateAll() {
-    if (displayErrorfName() && displayErrorlName() && displayErrorBirthDate() && isEmailValid() && phoneNumberError() && displayPasswordError() && displayConfirmPasswordError()) {
+    if (displayErrorfName() && displayErrorlName() && displayErrorBirthDate() && isEmailValid() && phoneNumberError() && displayPasswordError() && displayConfirmPasswordError() && checkBoxValid()) {
         userData.push({ Name: username+" "+userlname, DateOfBirth: birthDate, Email: email, Number: number, Password: password, UniqueID: x});
         localStorage.setItem("users", JSON.stringify(userData));
         document.getElementById('spinner').style.display = "block";
@@ -236,6 +251,7 @@ function validateAll() {
         phoneNumberError();
         displayPasswordError();
         displayConfirmPasswordError();
+        checkBoxValid()
         return false;
     }
 }

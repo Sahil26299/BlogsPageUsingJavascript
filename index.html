@@ -26,14 +26,19 @@
             </div>
             <div id="inp-1">
                 <input id="birthDateInput" type="date" name="dateOfBirth" placeholder="Enter your birth date" onchange="displayErrorBirthDate()" autocomplete="off">
-                <p id="show_dob_error"></p>
+                <p id="show_dob_error">
+                    <ul id="dateErrorUL">
+                        <li id="dateErrorLiItem-1">User must be 18 to 100 years old!</li>
+                        <li id="dateErrorLiItem-2">User should not enter future date as birthdate!</li>
+                    </ul>
+                </p>
             </div>
             <div id="inp-2">
                 <input id="email" type="text" name="email_id" placeholder="Enter your email" onkeyup="isEmailValid()" autocomplete="off">
                 <p id="show_email_error"></p>
             </div>
             <div id="inp-3">
-                <input id="contact" type="number" name="contact" placeholder="Enter your contact number" onkeyup="phoneNumberError()" autocomplete="off">
+                <input id="contact" type="number" name="contact" placeholder="Enter your mobile number" onkeyup="phoneNumberError()" autocomplete="off">
                 <p id="show_contact_error"></p>
             </div>
             <div id="inp-4" style="position: relative;">
@@ -55,6 +60,11 @@
                 <input id="confirmPassword" type="password" name="password" placeholder="Confirm your password" onkeyup="displayConfirmPasswordError()" autocomplete="off">
                 <p id="show_confirm_password_error"></p>
                 <i class="fas fa-eye" style="color: white; position:absolute; top:1vw; right:2vw;" onclick="showConfirmPassword()"></i>
+                <div id="inp_checkbox">
+                    <input type="checkbox" id="exampleCheck1" onclick="checkBoxValid()">
+                    <label class="form-check-label" id="checkbox_label" for="exampleCheck1" style="text-align: left;">I Have Read And Agree To
+                        <a href="#" id="checkbox_a">Terms Of Services</a>.</label>
+                </div>
             </div>
             <div id="inp-5">
                 <button type="button" onclick="validateAll()" id="btn">Sign Up</button>
